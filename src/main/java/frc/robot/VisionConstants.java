@@ -31,7 +31,7 @@ public class VisionSubsystem extends SubsystemBase {
 
   public VisionSubsystem() {
     try {
-      // Loads the 2026 field tag layout from WPILib's built-in resources
+      // 2026 AprilTag Field Layout (WPILib resource that quite literally does what I said -- when it sees one tag, it will know where it is in comparison to the field)
       fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026Rebuilt);
 
     } catch (Exception e) {
@@ -57,12 +57,12 @@ public class VisionSubsystem extends SubsystemBase {
     backEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
   }
 
-  /** Get pose estimate from front cam (if any) */
+  // Get pose estimate from front cam (if any) 
   public Optional<EstimatedRobotPose> getFrontEstimatedPose() {
     return frontEstimator.update();
   }
 
-  /** Get pose estimate from back cam (if any) */
+  // Get pose estimate from back cam (if any) 
   public Optional<EstimatedRobotPose> getBackEstimatedPose() {
     return backEstimator.update();
   }
@@ -72,11 +72,11 @@ public class VisionSubsystem extends SubsystemBase {
     var front = getFrontEstimatedPose();
     var back  = getBackEstimatedPose();
 
-    // Publish to SmartDashboard for tomorrow
+    // Publish to SmartDashboard 
     publish("Front", front);
     publish("Back", back);
 
-    // Also print occasionally so you can see it in logs without a dashboard
+    // Also print occasionally so we can see it in logs without a dashboard
     double now = Timer.getFPGATimestamp();
     if (now - lastPrint > 0.5) { // twice per second
       lastPrint = now;
